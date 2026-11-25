@@ -1,0 +1,9 @@
+ffmpeg version 5.1.10 Copyright (c) 2000-2026 the FFmpeg developers
+built with emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 3.1.40 (5c27e79dd0a9c4e27ef2326841698cdd4f6b5784)
+configuration: --target-os=none --arch=x86_32 --enable-cross-compile --disable-asm --disable-x86asm --disable-inline-asm --disable-stripping --disable-programs --disable-doc --disable-debug --disable-runtime-cpudetect --disable-autodetect --disable-pthreads --disable-w32threads --disable-os2threads --disable-network --disable-avdevice --disable-indevs --disable-outdevs --disable-hwaccels --disable-postproc --nm=emnm --ar=emar --ranlib=emranlib --cc=emcc --cxx=em++ --objcc=emcc --dep-cc=emcc --pkg-config=pkg-config --pkg-config-flags=--static --extra-cflags='-O3 -I/opt/deps/include' --extra-ldflags=-L/opt/deps/lib --enable-zlib --enable-libmp3lame --enable-libvorbis
+libavutil      57. 28.100 / 57. 28.100
+libavcodec     59. 37.100 / 59. 37.100
+libavformat    59. 27.100 / 59. 27.100
+libavfilter     8. 44.100 /  8. 44.100
+libswscale      6.  7.100 /  6.  7.100
+libswresample   4.  7.100 /  4.  7.100

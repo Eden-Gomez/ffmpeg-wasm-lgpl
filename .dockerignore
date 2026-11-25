@@ -1,0 +1,7 @@
+.git
+.github
+dist
+rebuild
+worker
+tools
+*.md

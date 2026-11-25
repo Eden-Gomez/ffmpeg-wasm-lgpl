@@ -1,0 +1,36 @@
+
+  configuration:
+    --target-os=none
+    --arch=x86_32
+    --enable-cross-compile
+    --disable-asm
+    --disable-x86asm
+    --disable-inline-asm
+    --disable-stripping
+    --disable-programs
+    --disable-doc
+    --disable-debug
+    --disable-runtime-cpudetect
+    --disable-autodetect
+    --disable-pthreads
+    --disable-w32threads
+    --disable-os2threads
+    --disable-network
+    --disable-avdevice
+    --disable-indevs
+    --disable-outdevs
+    --disable-hwaccels
+    --disable-postproc
+    --nm=emnm
+    --ar=emar
+    --ranlib=emranlib
+    --cc=emcc
+    --cxx=em++
+    --objcc=emcc
+    --dep-cc=emcc
+    --pkg-config=pkg-config --pkg-config-flags=--static
+    --extra-cflags='-O3 -I/opt/deps/include'
+    --extra-ldflags=-L/opt/deps/lib
+    --enable-zlib
+    --enable-libmp3lame
+    --enable-libvorbis

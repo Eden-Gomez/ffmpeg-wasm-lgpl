@@ -1,0 +1,12 @@
+* -text
+*.sh text eol=lf
+*.js text eol=lf
+Dockerfile text eol=lf
+SHA256SUMS text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.json text eol=lf
+*.mjs text eol=lf
+*.yml text eol=lf
+.dockerignore text eol=lf
+LICENSE text eol=lf

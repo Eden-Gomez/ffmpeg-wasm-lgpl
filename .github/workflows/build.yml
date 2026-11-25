@@ -1,0 +1,55 @@
+# Rebuilds the core from the pinned sources on every push and pull request, then fails if:
+#  - any source tarball differs from SHA256SUMS,
+#  - the configure line contains a GPL/nonfree flag or ffmpeg -L does not report the LGPL
+#    (smoke.js already fails the Docker build on these; checked again here on the output),
+#  - the rebuilt ffmpeg-core.js / ffmpeg-core.wasm are not byte-identical to dist/.
+name: build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Verify source tarballs
+        run: cd sources && sha256sum -c ../SHA256SUMS
+
+      - name: Build in Docker (no cache)
+        run: docker build --no-cache --progress=plain --output type=local,dest=rebuild .
+
+      - name: Fail on GPL / nonfree configuration
+        run: |
+          set -eu
+          cat rebuild/version.txt
+          for f in --enable-gpl --enable-nonfree --enable-version3 libx264 libx265 libfdk; do
+            if grep -q -- "$f" rebuild/version.txt; then echo "::error::forbidden configure flag: $f"; exit 1; fi
+          done
+          node tools/check-licence.mjs rebuild/ffmpeg-core.wasm dist/ffmpeg-core.wasm
+
+      - name: Fail unless ffmpeg -L reports the LGPL
+        run: |
+          set -eu
+          cat rebuild/license.txt
+          tr -s ' \n' ' ' < rebuild/license.txt > /tmp/lic.txt
+          grep -q 'GNU Lesser General Public License' /tmp/lic.txt
+          if grep -q 'GNU General Public License as published' /tmp/lic.txt; then echo "::error::licence is GPL"; exit 1; fi
+
+      - name: Byte-identical to the committed dist/
+        run: |
+          set -eu
+          (cd rebuild && sha256sum -c ../dist/SHA256SUMS)
+          for f in version.txt buildconf.txt license.txt decoders.txt encoders.txt demuxers.txt muxers.txt filters.txt SHA256SUMS; do
+            cmp "rebuild/$f" "dist/$f"
+          done
+          echo "rebuild is byte-identical to dist/"
